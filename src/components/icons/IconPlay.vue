@@ -1,0 +1,27 @@
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="28"
+    height="28"
+    viewBox="0 0 28 28"
+  >
+    <g transform="translate(-575 298) rotate(-90)">
+      <circle
+        class="a"
+        cx="14"
+        cy="14"
+        r="14"
+        transform="translate(298 603) rotate(180)"
+        fill="#fff"
+      />
+      <path
+        class="b"
+        d="M5,0l5,8H0Z"
+        transform="translate(289 594) rotate(180)"
+        fill="#DB2F20"
+      />
+    </g>
+  </svg>
+</template>
+<script setup lang="ts"></script>
+<style scoped></style>
