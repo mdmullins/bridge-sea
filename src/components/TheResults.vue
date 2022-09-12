@@ -14,12 +14,10 @@
     </div>
     <div class="results__figures">
       <ul>
-        <li>supplier &amp; product - </li>
-        <li>Quotation to order process - </li>
-        <li>Expediting &amp; recieving orders - </li>
-        <li>Processing invoices - </li>
-        <li>Paying suppliers - </li>
-        <li>Total process costs (year) - </li>
+        <li v-for="item in resultsList" :key="item.id">
+          {{ item.title }}&nbsp;&ndash;&nbsp;{{ getMoney(getResult(item)) }}
+        </li>
+        <li>Total process costs&nbsp;&ndash;&nbsp;{{ getTotal }}</li>
       </ul>
       <IconButton text="Send me this report" :play-icon="false" />
     </div>
@@ -38,15 +36,74 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-})
-const resultOne = computed(() => {
-  const checklistData = props.data.1;
-  const questionsData = props.data.2;
-  const IR = checklistData.selected
-})
+});
+const resultsList = [
+  {
+    id: 1,
+    checklistIds: [1, 2],
+    questionId: 2,
+    title: "Supplier & product",
+  },
+  {
+    id: 2,
+    checklistIds: [3, 4, 5, 6],
+    questionId: 2,
+    title: "Quotation to order process",
+  },
+  {
+    id: 3,
+    checklistIds: [7],
+    questionId: 1,
+    title: "Expediting & recieving orders",
+  },
+  {
+    id: 4,
+    checklistIds: [8],
+    questionId: 2,
+    title: "Processing invoices",
+  },
+  {
+    id: 5,
+    checklistIds: [9],
+    questionId: 3,
+    title: "Paying suppliers",
+  },
+];
+const getResult = (item) => {
+  const { checklistIds, questionId } = item;
+  const { data, checklist } = props;
+  const questionData = data[2];
+  console.log({ questionData });
+  const costs = checklistIds.reduce((acc, id) => {
+    const item = checklist.find((item) => item.id === id);
+    return acc + item.cost;
+  }, 0);
+  const questionAmount = questionData[questionId];
+  const result = costs * questionAmount;
+  return result;
+};
+const getMoney = (item) => {
+  const payload = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  }).format(item.toFixed(2));
+  return payload;
+};
+const getTotal = computed(() => {
+  const payload = resultsList.reduce((acc, item) => {
+    const result = getResult(item);
+    return acc + result;
+  }, 0);
+  return getMoney(payload);
+});
 </script>
 
 <style scoped>
+.results__wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
 .results__content {
   width: 50%;
   text-align: left;

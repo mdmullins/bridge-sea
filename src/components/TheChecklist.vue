@@ -45,7 +45,7 @@ const handleSelect = (item: ChecklistItem) => {
 };
 const total = computed(() => {
   const payload = selected.value.reduce((acc, id) => {
-    const item = checklist.find((item) => item.id === id);
+    const item = props.checklist.find((item) => item.id === id);
     if (item && item.cost) {
       return acc + item.cost;
     }
