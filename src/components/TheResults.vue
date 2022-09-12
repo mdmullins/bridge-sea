@@ -13,13 +13,27 @@
       <IconButton text="Go back" play-icon="back" />
     </div>
     <div class="results__figures">
-      <ul>
-        <li v-for="item in resultsList" :key="item.id">
-          {{ item.title }}&nbsp;&ndash;&nbsp;{{ getMoney(getResult(item)) }}
+      <ul class="results__list">
+        <li
+          v-for="item in resultsList"
+          :key="item.id"
+          class="results__figures__item"
+        >
+          <span class="results__figures__item__title">{{ item.title }}</span
+          ><span class="results__figures__item__amount">{{
+            getMoney(getResult(item))
+          }}</span>
         </li>
-        <li>Total process costs&nbsp;&ndash;&nbsp;{{ getTotal }}</li>
+        <li class="results__figures__item--total">
+          <span class="results__figures__item__title">Total process costs</span>
+          <span class="results__figures__item__amount">{{ getTotal }}</span>
+        </li>
       </ul>
-      <IconButton text="Send me this report" :play-icon="false" />
+      <IconButton
+        class="send-button"
+        text="Send me this report"
+        :play-icon="false"
+      />
     </div>
   </div>
 </template>
@@ -103,13 +117,17 @@ const getTotal = computed(() => {
   display: flex;
   justify-content: space-between;
   height: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 .results__content {
-  width: 50%;
+  flex-grow: 1;
+  flex-basis: 0;
   text-align: left;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-right: 3rem;
 }
 .results__heading {
   color: var(--vt-c-red);
@@ -118,5 +136,50 @@ const getTotal = computed(() => {
 }
 .results__body {
   margin: 2rem 0;
+}
+.results__figures {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.results__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.results__figures__item--total,
+.results__figures__item {
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  /* padding: 0.625rem 1.5rem; */
+  border-radius: 1.25rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+.results__figures__item__amount {
+  padding: 0.625rem 1.5rem;
+  background-color: var(--vt-c-red);
+  color: white;
+}
+.results__figures__item__title {
+  padding: 0.625rem 1.5rem;
+  flex-grow: 1;
+}
+.results__figures__item--total .results__figures__item__title {
+  background-color: var(--vt-c-purple);
+  color: white;
+}
+.results__figures__item--total .results__figures__item__amount {
+  background-color: white;
+  color: var(--vt-c-purple);
+}
+.send-button {
+  font-size: 1.25rem;
+  width: auto;
+  padding: 0.5rem 1.5rem;
+  margin-top: 1.5rem;
 }
 </style>
